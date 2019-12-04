@@ -9,7 +9,7 @@ export default class Apple extends Component
             resultText:"",
             calculationText:""
         }
-        this.operations = ['Del','+','-','*','/']
+        this.operations = ['Clr','Del','+','*','^']
     }
     calculateResult()
     {
@@ -25,9 +25,8 @@ export default class Apple extends Component
         const text=this.state.resultText
         switch(text.slice(-1)){
             case '+':
-            case '-':
             case '*':
-            case '/':
+            case '^':
                 return false
         }
         return true
@@ -54,15 +53,29 @@ export default class Apple extends Component
             break;
 
             case '+':
-            case '-':
             case '*':
+
             const lastChar=this.state.resultText.split('').pop()
             if(this.operations.indexOf(lastChar)>0) return
 
             if(this.state.text=="")return
             this.setState({
+
                 resultText: this.state.resultText + operation
             })
+            break;
+            case '^':
+            this.setState({
+                resultText: this.state.resultText + "**"
+            })
+            break;
+            case 'Clr':
+            this.setState({
+                resultText: ""
+
+            })
+
+
         }
     }
 
@@ -83,7 +96,7 @@ export default class Apple extends Component
         let ops=[]
         for(let i=0;i<5;i++)
         {
-            ops.push(<TouchableOpacity onPress={() => this.operate(this.operations[i])} style={styles.btn}><Text style={styles.btntext,styles.white}>{operations[i]}</Text></TouchableOpacity>)
+            ops.push(<TouchableOpacity onPress={() => this.operate(this.operations[i])} style={styles.btn}><Text style={styles.btntext,styles.white}>{this.operations[i]}</Text></TouchableOpacity>)
         }
 
 
